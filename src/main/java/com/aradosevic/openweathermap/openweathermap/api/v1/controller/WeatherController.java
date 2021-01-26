@@ -1,6 +1,6 @@
 package com.aradosevic.openweathermap.openweathermap.api.v1.controller;
 
-import com.aradosevic.openweathermap.openweathermap.dto.CityWeatherDto;
+import com.aradosevic.openweathermap.openweathermap.dto.TimeDataDto;
 import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.DefaultMessages;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -22,14 +22,14 @@ public class WeatherController {
           @ApiResponse(
               code = 200,
               message = "Weathers",
-              response = CityWeatherDto.class,
+              response = TimeDataDto.class,
               responseContainer = "List")
           ,
           @ApiResponse(code = 500, message = DefaultMessages.INTERNAL_SERVER_ERROR)
       })
   @GetMapping
-  public ResponseEntity<CityWeatherDto> getWeatherForAllCities() {
-    return ResponseEntity.ok(CityWeatherDto.builder().build());
+  public ResponseEntity<TimeDataDto> getWeatherForAllCities() {
+    return ResponseEntity.ok(TimeDataDto.builder().build());
   }
 
 }

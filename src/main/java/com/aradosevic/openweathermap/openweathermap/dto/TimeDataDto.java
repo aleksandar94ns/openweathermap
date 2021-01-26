@@ -1,5 +1,6 @@
 package com.aradosevic.openweathermap.openweathermap.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -15,11 +16,10 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Builder
-public class CityWeatherDto {
+public class TimeDataDto {
 
-  private Integer id;
+  @JsonProperty("dt")
+  private Integer timestamp;
 
-  private String name;
-
-  private Integer temperature;
+  private MainTimeDataDto main;
 }
