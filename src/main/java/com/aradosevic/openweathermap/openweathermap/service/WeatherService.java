@@ -3,7 +3,9 @@ package com.aradosevic.openweathermap.openweathermap.service;
 import com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties;
 import com.aradosevic.openweathermap.openweathermap.domain.City;
 import com.aradosevic.openweathermap.openweathermap.dto.CityDto;
+import com.aradosevic.openweathermap.openweathermap.dto.DateTimeWeatherDto;
 import com.aradosevic.openweathermap.openweathermap.dto.factory.CityDtoFactory;
+import com.aradosevic.openweathermap.openweathermap.dto.factory.DateTimeWeatherFactory;
 import com.aradosevic.openweathermap.openweathermap.repository.CityRepository;
 import com.aradosevic.openweathermap.openweathermap.repository.DateTimeWeatherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +30,51 @@ public class WeatherService {
         this.clientAppProperties = clientAppProperties;
     }
 
-    //TODO: Implement average from dates
-    public CityDto getCityAverageFromDates(long start, long end, String cityName) {
+    public CityDto getCityAverageAfterDate(long date, String cityName) {
         City city = cityRepository.findByName(cityName);
         CityDto dto = CityDtoFactory.from(city);
+        Date afterDate = new Date(date * 1000);
 
-        Date startDate = new Date(start);
-        Date endDate = new Date(end);
+        List<DateTimeWeatherDto> dateDto = DateTimeWeatherFactory.fromList(
+                dateTimeWeatherRepository.findByCityNameAndTimestampAfter(cityName, afterDate));
+        dto.setDateTimeWeathers(dateDto);
+        dto.setAverageTemp(getAverage(dateDto));
+
+        return dto;
+    }
+
+    public CityDto getCityAverageBeforeDate(long date, String cityName) {
+        City city = cityRepository.findByName(cityName);
+        CityDto dto = CityDtoFactory.from(city);
+        Date beforeDate = new Date(date * 1000);
+
+        List<DateTimeWeatherDto> dateDto = DateTimeWeatherFactory.fromList(
+                dateTimeWeatherRepository.findByCityNameAndTimestampBefore(cityName, beforeDate));
+        dto.setDateTimeWeathers(dateDto);
+        dto.setAverageTemp(getAverage(dateDto));
+
+        return dto;
+    }
+
+    public List<CityDto> getCitiesAverageBetweenDates(long start, long end) {
+        List<CityDto> cities = new ArrayList<>();
+        cities.add(getCityAverageFromDates(start, end, clientAppProperties.getCity1()));
+        cities.add(getCityAverageFromDates(start, end, clientAppProperties.getCity2()));
+        cities.add(getCityAverageFromDates(start, end, clientAppProperties.getCity3()));
+        return cities;
+    }
+
+    public CityDto getCityAverageFromDates(long start, long end, String cityName) {
+        CityDto dto = new CityDto();
+
+        Date startDate = new Date(start * 1000);
+        Date endDate = new Date(end * 1000);
+
+        List<DateTimeWeatherDto> dateDto = DateTimeWeatherFactory.fromList(
+                dateTimeWeatherRepository.findByCityNameAndTimestampBetween(cityName, startDate, endDate));
+        dto.setDateTimeWeathers(dateDto);
+        dto.setAverageTemp(getAverage(dateDto));
+        dto.setName(cityName);
 
         return dto;
     }
@@ -51,13 +91,17 @@ public class WeatherService {
         City city = cityRepository.findByName(cityName);
         CityDto dto = CityDtoFactory.from(city);
 
-        Double avgSum = 0.0;
-        for (int i = 0; i < dto.getDateTimeWeathers().size(); i++) {
-            avgSum += dto.getDateTimeWeathers().get(i).getTemperature();
-        }
-
-        dto.setAverageTemp(avgSum / dto.getDateTimeWeathers().size());
+        dto.setAverageTemp(getAverage(dto.getDateTimeWeathers()));
         dto.setDateTimeWeathers(null);
         return dto;
+    }
+
+    public double getAverage(List<DateTimeWeatherDto> dateTimeWeatherDtos) {
+        Double avgSum = 0.0;
+        for (DateTimeWeatherDto dateTimeWeatherDto : dateTimeWeatherDtos) {
+            avgSum += dateTimeWeatherDto.getTemperature();
+        }
+
+        return avgSum / dateTimeWeatherDtos.size();
     }
 }

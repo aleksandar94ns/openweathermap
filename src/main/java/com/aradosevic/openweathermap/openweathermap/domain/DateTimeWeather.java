@@ -3,6 +3,7 @@ package com.aradosevic.openweathermap.openweathermap.domain;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -17,7 +18,8 @@ public class DateTimeWeather {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private Long timestamp;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestamp;
 
     private Double temperature;
     private Double minTemp;

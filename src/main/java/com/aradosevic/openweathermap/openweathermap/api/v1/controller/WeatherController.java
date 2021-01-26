@@ -1,6 +1,7 @@
 package com.aradosevic.openweathermap.openweathermap.api.v1.controller;
 
 import com.aradosevic.openweathermap.openweathermap.dto.CityDto;
+import com.aradosevic.openweathermap.openweathermap.dto.DatesDto;
 import com.aradosevic.openweathermap.openweathermap.dto.SpecificDatesDto;
 import com.aradosevic.openweathermap.openweathermap.dto.factory.CityDtoFactory;
 import com.aradosevic.openweathermap.openweathermap.dto.openweathermap.TimeDataDto;
@@ -79,13 +80,29 @@ public class WeatherController {
                 .collect(Collectors.toList()));
     }
 
-    @GetMapping("/{cityName}/average")
-    public ResponseEntity<List<CityDto>> getAverageForSpecificDate(@PathVariable String cityName,
-                                                                   @RequestBody @Valid SpecificDatesDto specificDatesDto) {
-        return ResponseEntity.ok(weatherService.getAverageForAllCities()
-                .stream().sorted((Comparator.comparing(CityDto::getAverageTemp))
-                        .reversed())
-                .collect(Collectors.toList()));
+    @GetMapping("/{cityName}/average-dates-between")
+    public ResponseEntity<CityDto> getAverageForSpecificDate(@PathVariable String cityName,
+                                                             @RequestBody @Valid SpecificDatesDto specificDatesDto) {
+        return ResponseEntity.ok(weatherService.getCityAverageFromDates(specificDatesDto.getStartDate(),
+                specificDatesDto.getEndDate(), cityName));
+    }
+
+    @GetMapping("/cities/average-dates-between")
+    public ResponseEntity<List<CityDto>> getAverageForCitiesBetweenDates(@RequestBody @Valid SpecificDatesDto specificDatesDto) {
+        return ResponseEntity.ok(weatherService.getCitiesAverageBetweenDates(specificDatesDto.getStartDate(),
+                specificDatesDto.getEndDate()));
+    }
+
+    @GetMapping("/{cityName}/average-dates-before")
+    public ResponseEntity<CityDto> getAverageBeforeDate(@PathVariable String cityName,
+                                                        @RequestBody @Valid DatesDto datesDto) {
+        return ResponseEntity.ok(weatherService.getCityAverageBeforeDate(datesDto.getDate(), cityName));
+    }
+
+    @GetMapping("/{cityName}/average-dates-after")
+    public ResponseEntity<CityDto> getAverageAfterDate(@PathVariable String cityName,
+                                                       @RequestBody @Valid DatesDto datesDto) {
+        return ResponseEntity.ok(weatherService.getCityAverageAfterDate(datesDto.getDate(), cityName));
     }
 
     @GetMapping("/{cityName}/temp")

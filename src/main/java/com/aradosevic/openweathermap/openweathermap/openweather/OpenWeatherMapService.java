@@ -13,6 +13,8 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Date;
+
 @Service
 @Log4j2
 public class OpenWeatherMapService {
@@ -55,7 +57,7 @@ public class OpenWeatherMapService {
     private void saveTemperature(TimeDataDto timeDataDto, City city) {
         DateTimeWeather dateTimeWeather = new DateTimeWeather();
         dateTimeWeather.setCity(city);
-        dateTimeWeather.setTimestamp(timeDataDto.getTimestamp());
+        dateTimeWeather.setTimestamp(new Date(timeDataDto.getTimestamp() * 1000));
         dateTimeWeather.setTemperature(timeDataDto.getMain().getTemperature());
         dateTimeWeather.setMinTemp(timeDataDto.getMain().getMinTemp());
         dateTimeWeather.setMaxTemp(timeDataDto.getMain().getMaxTemp());
