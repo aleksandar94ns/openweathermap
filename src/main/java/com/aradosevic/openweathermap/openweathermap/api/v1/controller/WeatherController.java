@@ -1,6 +1,7 @@
 package com.aradosevic.openweathermap.openweathermap.api.v1.controller;
 
 import com.aradosevic.openweathermap.openweathermap.dto.CityDto;
+import com.aradosevic.openweathermap.openweathermap.dto.SpecificDatesDto;
 import com.aradosevic.openweathermap.openweathermap.dto.factory.CityDtoFactory;
 import com.aradosevic.openweathermap.openweathermap.dto.openweathermap.TimeDataDto;
 import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.DefaultMessages;
@@ -13,11 +14,10 @@ import io.swagger.annotations.ApiResponses;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,6 +57,35 @@ public class WeatherController {
     @GetMapping("/cities")
     public ResponseEntity<List<CityDto>> getAvailableCities() {
         return ResponseEntity.ok(cityRepository.findAll().stream().map(CityDtoFactory::from).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/cities/average")
+    public ResponseEntity<List<CityDto>> getAverageForAllCities() {
+        return ResponseEntity.ok(weatherService.getAverageForAllCities());
+    }
+
+    @GetMapping("/cities/average/asc")
+    public ResponseEntity<List<CityDto>> getAverageForAllCitiesAscending() {
+        return ResponseEntity.ok(weatherService.getAverageForAllCities()
+                .stream().sorted((Comparator.comparing(CityDto::getAverageTemp)))
+                .collect(Collectors.toList()));
+    }
+
+    @GetMapping("/cities/average/desc")
+    public ResponseEntity<List<CityDto>> getAverageForAllCitiesDescending() {
+        return ResponseEntity.ok(weatherService.getAverageForAllCities()
+                .stream().sorted((Comparator.comparing(CityDto::getAverageTemp))
+                        .reversed())
+                .collect(Collectors.toList()));
+    }
+
+    @GetMapping("/{cityName}/average")
+    public ResponseEntity<List<CityDto>> getAverageForSpecificDate(@PathVariable String cityName,
+                                                                   @RequestBody @Valid SpecificDatesDto specificDatesDto) {
+        return ResponseEntity.ok(weatherService.getAverageForAllCities()
+                .stream().sorted((Comparator.comparing(CityDto::getAverageTemp))
+                        .reversed())
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/{cityName}/temp")
