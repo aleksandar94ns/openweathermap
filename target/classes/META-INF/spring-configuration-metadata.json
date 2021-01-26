@@ -1,0 +1,37 @@
+{
+  "groups": [
+    {
+      "name": "custom.client-app",
+      "type": "com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties",
+      "sourceType": "com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "custom.client-app.city1",
+      "type": "java.lang.String",
+      "sourceType": "com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties"
+    },
+    {
+      "name": "custom.client-app.city2",
+      "type": "java.lang.String",
+      "sourceType": "com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties"
+    },
+    {
+      "name": "custom.client-app.city3",
+      "type": "java.lang.String",
+      "sourceType": "com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties"
+    },
+    {
+      "name": "custom.client-app.host",
+      "type": "java.lang.String",
+      "sourceType": "com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties"
+    },
+    {
+      "name": "custom.client-app.protocol",
+      "type": "java.lang.String",
+      "sourceType": "com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties"
+    }
+  ],
+  "hints": []
+}

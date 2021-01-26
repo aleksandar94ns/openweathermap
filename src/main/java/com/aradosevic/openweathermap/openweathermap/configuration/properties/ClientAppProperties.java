@@ -11,4 +11,8 @@ public class ClientAppProperties {
 
   private String host;
   private String protocol;
+
+  private String city1;
+  private String city2;
+  private String city3;
 }
