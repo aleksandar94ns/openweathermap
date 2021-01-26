@@ -9,4 +9,5 @@ public class CityDto {
 
     String name;
     List<DateTimeWeatherDto> dateTimeWeathers;
+    Double averageTemp;
 }

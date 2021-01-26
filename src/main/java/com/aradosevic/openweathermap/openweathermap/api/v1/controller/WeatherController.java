@@ -1,12 +1,12 @@
 package com.aradosevic.openweathermap.openweathermap.api.v1.controller;
 
-import com.aradosevic.openweathermap.openweathermap.domain.DateTimeWeather;
 import com.aradosevic.openweathermap.openweathermap.dto.CityDto;
-import com.aradosevic.openweathermap.openweathermap.dto.openweathermap.TimeDataDto;
 import com.aradosevic.openweathermap.openweathermap.dto.factory.CityDtoFactory;
+import com.aradosevic.openweathermap.openweathermap.dto.openweathermap.TimeDataDto;
 import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.DefaultMessages;
 import com.aradosevic.openweathermap.openweathermap.repository.CityRepository;
 import com.aradosevic.openweathermap.openweathermap.repository.DateTimeWeatherRepository;
+import com.aradosevic.openweathermap.openweathermap.service.WeatherService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -28,11 +28,14 @@ public class WeatherController {
 
     private final CityRepository cityRepository;
     private final DateTimeWeatherRepository dateTimeWeatherRepository;
+    private final WeatherService weatherService;
 
     @Autowired
-    public WeatherController(CityRepository cityRepository, DateTimeWeatherRepository dateTimeWeatherRepository) {
+    public WeatherController(CityRepository cityRepository, DateTimeWeatherRepository dateTimeWeatherRepository,
+                             WeatherService weatherService) {
         this.cityRepository = cityRepository;
         this.dateTimeWeatherRepository = dateTimeWeatherRepository;
+        this.weatherService = weatherService;
     }
 
     @ApiOperation(value = "Get weather for all cities")
@@ -57,7 +60,12 @@ public class WeatherController {
     }
 
     @GetMapping("/{cityName}/temp")
-    public ResponseEntity<CityDto> getAvailableCities(@PathVariable String cityName) {
+    public ResponseEntity<CityDto> getCityTemperature(@PathVariable String cityName) {
         return ResponseEntity.ok(CityDtoFactory.from(cityRepository.findByName(cityName)));
+    }
+
+    @GetMapping("/{cityName}/average")
+    public ResponseEntity<CityDto> getCityAverage(@PathVariable String cityName) {
+        return ResponseEntity.ok(weatherService.getCityAverage(cityName));
     }
 }
