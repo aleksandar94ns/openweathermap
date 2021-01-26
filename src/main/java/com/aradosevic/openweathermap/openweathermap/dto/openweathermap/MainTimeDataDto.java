@@ -1,4 +1,4 @@
-package com.aradosevic.openweathermap.openweathermap.dto;
+package com.aradosevic.openweathermap.openweathermap.dto.openweathermap;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -14,4 +14,10 @@ public class MainTimeDataDto {
 
     @JsonProperty("temp")
     Double temperature;
+
+    @JsonProperty("temp_min")
+    Double minTemp;
+
+    @JsonProperty("temp_max")
+    Double maxTemp;
 }

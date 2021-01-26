@@ -1,11 +1,12 @@
 package com.aradosevic.openweathermap.openweathermap.dto;
 
 import lombok.Data;
-import lombok.Setter;
+
+import java.util.List;
 
 @Data
-@Setter
 public class CityDto {
 
     String name;
+    List<DateTimeWeatherDto> dateTimeWeathers;
 }

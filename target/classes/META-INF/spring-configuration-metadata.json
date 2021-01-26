@@ -8,6 +8,11 @@
   ],
   "properties": [
     {
+      "name": "custom.client-app.appid",
+      "type": "java.lang.String",
+      "sourceType": "com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties"
+    },
+    {
       "name": "custom.client-app.city1",
       "type": "java.lang.String",
       "sourceType": "com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties"

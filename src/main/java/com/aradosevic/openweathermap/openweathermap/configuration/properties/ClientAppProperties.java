@@ -15,4 +15,6 @@ public class ClientAppProperties {
   private String city1;
   private String city2;
   private String city3;
+
+  private String appid;
 }

@@ -1,5 +1,6 @@
-package com.aradosevic.openweathermap.openweathermap.dto;
+package com.aradosevic.openweathermap.openweathermap.dto.openweathermap;
 
+import com.aradosevic.openweathermap.openweathermap.dto.openweathermap.MainTimeDataDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,7 @@ import lombok.ToString;
 public class TimeDataDto {
 
   @JsonProperty("dt")
-  private Integer timestamp;
+  private Long timestamp;
 
   private MainTimeDataDto main;
 }

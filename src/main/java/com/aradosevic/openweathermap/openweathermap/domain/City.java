@@ -6,13 +6,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "city")
 public class City {
+
+    @OneToMany(mappedBy = "city")
+    private List<DateTimeWeather> dateTimeWeathers;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

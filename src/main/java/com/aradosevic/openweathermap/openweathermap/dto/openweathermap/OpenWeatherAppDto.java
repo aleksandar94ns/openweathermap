@@ -1,4 +1,4 @@
-package com.aradosevic.openweathermap.openweathermap.dto;
+package com.aradosevic.openweathermap.openweathermap.dto.openweathermap;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
