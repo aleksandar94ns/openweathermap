@@ -8,7 +8,7 @@
   ],
   "properties": [
     {
-      "name": "custom.client-app.appid",
+      "name": "custom.client-app.app-id",
       "type": "java.lang.String",
       "sourceType": "com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties"
     },
@@ -24,16 +24,6 @@
     },
     {
       "name": "custom.client-app.city3",
-      "type": "java.lang.String",
-      "sourceType": "com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties"
-    },
-    {
-      "name": "custom.client-app.host",
-      "type": "java.lang.String",
-      "sourceType": "com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties"
-    },
-    {
-      "name": "custom.client-app.protocol",
       "type": "java.lang.String",
       "sourceType": "com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties"
     }

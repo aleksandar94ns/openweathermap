@@ -13,7 +13,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -37,6 +36,8 @@ public class DateTimeWeather {
   private Date timestamp;
 
   private Double temperature;
+
+  //TODO: min and max are currently not used, but can be used for interesting data representation down the line
   private Double minTemp;
   private Double maxTemp;
 }

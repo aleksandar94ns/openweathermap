@@ -73,7 +73,7 @@ public class OpenWeatherMapCommandLine implements CommandLineRunner {
   private void fetchTemperatures(City city) {
     OpenWeatherAppDto dto = restTemplate.getForObject(
         "https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={appId}&units=metric",
-        OpenWeatherAppDto.class, city.getName(), config.getAppid());
+        OpenWeatherAppDto.class, city.getName(), config.getAppId());
 
     dto.getTimeData().forEach(timeDataDto -> saveTemperature(timeDataDto, city));
   }

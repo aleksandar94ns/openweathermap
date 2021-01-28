@@ -5,23 +5,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.util.UriComponentsBuilder;
 
+/**
+ * Enable APIs for web browsers
+ */
 @Configuration
 public class CorsConfiguration {
 
   @Bean
-  public WebMvcConfigurer corsConfigurer(ClientAppProperties config) {
+  public WebMvcConfigurer corsConfigurer() {
     return new WebMvcConfigurer() {
       @Override
       public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-            .allowedOrigins(
-                UriComponentsBuilder.newInstance()
-                    .scheme(config.getProtocol())
-                    .host(config.getHost())
-                    .build()
-                    .toString())
             .allowedMethods("*");
       }
     };

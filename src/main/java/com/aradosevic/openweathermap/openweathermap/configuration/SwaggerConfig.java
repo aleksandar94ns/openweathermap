@@ -9,6 +9,9 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * Defines Swagger Ui and configuration
+ */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -18,7 +21,7 @@ public class SwaggerConfig {
     return new Docket(DocumentationType.SWAGGER_2)
         .select()
         .paths(PathSelectors.regex("/api/.*"))
-        .build();
+        .build().apiInfo(apiInfo());
   }
 
   private ApiInfo apiInfo() {
