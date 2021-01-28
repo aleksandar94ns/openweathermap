@@ -3,8 +3,11 @@ package com.aradosevic.openweathermap.openweathermap.openweather;
 import com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties;
 import com.aradosevic.openweathermap.openweathermap.domain.City;
 import com.aradosevic.openweathermap.openweathermap.domain.DateTimeWeather;
-import com.aradosevic.openweathermap.openweathermap.openweather.openweathermap.OpenWeatherAppDto;
-import com.aradosevic.openweathermap.openweathermap.openweather.openweathermap.TimeDataDto;
+import com.aradosevic.openweathermap.openweathermap.exception.NotFoundException;
+import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.DefaultMessages;
+import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.Keys;
+import com.aradosevic.openweathermap.openweathermap.openweather.dto.OpenWeatherAppDto;
+import com.aradosevic.openweathermap.openweathermap.openweather.dto.TimeDataDto;
 import com.aradosevic.openweathermap.openweathermap.repository.CityRepository;
 import com.aradosevic.openweathermap.openweathermap.repository.DateTimeWeatherRepository;
 import java.util.Date;
@@ -74,6 +77,11 @@ public class OpenWeatherMapCommandLine implements CommandLineRunner {
     OpenWeatherAppDto dto = restTemplate.getForObject(
         "https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={appId}&units=metric",
         OpenWeatherAppDto.class, city.getName(), config.getAppId());
+
+    //TODO: Refactor this quick null checker for bad API request.
+    if (dto == null) {
+      throw new NotFoundException(Keys.RESOURCE_NOT_FOUND, DefaultMessages.RESOURCE_NOT_FOUND);
+    }
 
     dto.getTimeData().forEach(timeDataDto -> saveTemperature(timeDataDto, city));
   }

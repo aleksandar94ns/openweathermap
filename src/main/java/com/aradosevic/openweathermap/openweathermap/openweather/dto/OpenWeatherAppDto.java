@@ -1,4 +1,4 @@
-package com.aradosevic.openweathermap.openweathermap.openweather.openweathermap;
+package com.aradosevic.openweathermap.openweathermap.openweather.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
