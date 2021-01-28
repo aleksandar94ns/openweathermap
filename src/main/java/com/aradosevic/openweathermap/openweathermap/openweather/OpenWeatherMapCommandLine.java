@@ -15,57 +15,87 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Command line runner class that is being called on application startup to fetch and populate data
+ * from https://openweathermap.org/ site with given API key.
+ * <p>
+ * Api key can be set in application.properties
+ */
 @Component
 @Log4j2
 public class OpenWeatherMapCommandLine implements CommandLineRunner {
 
-    private final RestTemplate restTemplate;
-    private final ClientAppProperties config;
-    private final CityRepository cityRepository;
-    private final DateTimeWeatherRepository dateTimeWeatherRepository;
+  private final RestTemplate restTemplate;
+  private final ClientAppProperties config;
+  private final CityRepository cityRepository;
+  private final DateTimeWeatherRepository dateTimeWeatherRepository;
 
-    @Autowired
-    public OpenWeatherMapCommandLine(RestTemplateBuilder restTemplateBuilder, ClientAppProperties config,
-                                 CityRepository cityRepository, DateTimeWeatherRepository dateTimeWeatherRepository) {
-        restTemplate = restTemplateBuilder.build();
-        this.config = config;
-        this.cityRepository = cityRepository;
-        this.dateTimeWeatherRepository = dateTimeWeatherRepository;
-    }
+  @Autowired
+  public OpenWeatherMapCommandLine(RestTemplateBuilder restTemplateBuilder,
+      ClientAppProperties config,
+      CityRepository cityRepository, DateTimeWeatherRepository dateTimeWeatherRepository) {
+    restTemplate = restTemplateBuilder.build();
+    this.config = config;
+    this.cityRepository = cityRepository;
+    this.dateTimeWeatherRepository = dateTimeWeatherRepository;
+  }
 
-    @Override
-    public void run(String... args) {
-        fetchData();
-    }
+  @Override
+  public void run(String... args) {
+    populateData();
+  }
 
-    public void fetchData() {
-        saveCity(config.getCity1());
-        saveCity(config.getCity2());
-        saveCity(config.getCity3());
-    }
+  /**
+   * Fetches data from all of the cities that are defined in application.properties.
+   */
+  public void populateData() {
+    saveCity(config.getCity1());
+    saveCity(config.getCity2());
+    saveCity(config.getCity3());
+  }
 
-    private void saveCity(String cityName) {
-        City city = new City();
-        city.setName(cityName);
-        cityRepository.save(city);
-        populateTemperatures(city);
-    }
+  /**
+   * Save each of the defined cities in database.
+   *
+   * @param cityName - Name of the city that is being saved
+   */
+  private void saveCity(String cityName) {
+    City city = new City();
+    city.setName(cityName);
+    cityRepository.save(city);
+    fetchTemperatures(city);
+  }
 
-    private void populateTemperatures(City city) {
-        OpenWeatherAppDto dto = restTemplate.getForObject(
-                "https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={appId}&units=metric",
-                OpenWeatherAppDto.class, city.getName(), config.getAppid());
+  /**
+   * Get specific city temperature with provided API, that will
+   *
+   * @param city - {@link City} that that needs temperature fetching
+   */
+  private void fetchTemperatures(City city) {
+    OpenWeatherAppDto dto = restTemplate.getForObject(
+        "https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={appId}&units=metric",
+        OpenWeatherAppDto.class, city.getName(), config.getAppid());
 
-        dto.getTimeData().forEach(timeDataDto -> saveTemperature(timeDataDto, city));
-    }
+    dto.getTimeData().forEach(timeDataDto -> saveTemperature(timeDataDto, city));
+  }
 
-    private void saveTemperature(TimeDataDto timeDataDto, City city) {
-        DateTimeWeather dateTimeWeather = new DateTimeWeather();
-        dateTimeWeather.setCity(city);
-        dateTimeWeather.setTimestamp(new Date(timeDataDto.getTimestamp() * 1000));
-        dateTimeWeather.setTemperature(timeDataDto.getMain().getTemperature());
-        dateTimeWeather.setMinTemp(timeDataDto.getMain().getMinTemp());
-        dateTimeWeather.setMaxTemp(timeDataDto.getMain().getMaxTemp());
-        dateTimeWeatherRepository.save(dateTimeWeather);
-    }
+  /**
+   * Convert {@link TimeDataDto} values into {@link DateTimeWeather} and save them into repository
+   * for provided {@link City}.
+   *
+   * @param timeDataDto {@link TimeDataDto} values from API that need to be converted into {@link DateTimeWeather}
+   * @param city {@link City} that will be attached as parent for newly created {@link DateTimeWeather}
+   */
+  private void saveTemperature(TimeDataDto timeDataDto, City city) {
+    final Integer secondsToMilliseconds = 1000;
+
+    dateTimeWeatherRepository.save(
+        DateTimeWeather.builder()
+            .city(city)
+            .timestamp(new Date(timeDataDto.getTimestamp() * secondsToMilliseconds))
+            .temperature(timeDataDto.getMain().getTemperature())
+            .maxTemp(timeDataDto.getMain().getMinTemp())
+            .minTemp(timeDataDto.getMain().getMaxTemp())
+            .build());
+  }
 }

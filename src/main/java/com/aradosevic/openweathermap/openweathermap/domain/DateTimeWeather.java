@@ -11,11 +11,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Data
 @Table(name = "date_time_weather")
+@Builder
 public class DateTimeWeather {
 
     @ManyToOne(fetch = FetchType.LAZY)
