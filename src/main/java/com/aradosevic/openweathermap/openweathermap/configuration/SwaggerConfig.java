@@ -18,9 +18,8 @@ public class SwaggerConfig {
   public Docket api() {
     return new Docket(DocumentationType.SWAGGER_2)
         .select()
-        .paths(PathSelectors.any())
-        .build()
-        .apiInfo(apiInfo());
+        .paths(PathSelectors.regex("/api/.*"))
+        .build();
   }
 
   private ApiInfo apiInfo() {

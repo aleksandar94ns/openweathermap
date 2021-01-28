@@ -6,6 +6,8 @@ import com.aradosevic.openweathermap.openweathermap.dto.CityDto;
 import com.aradosevic.openweathermap.openweathermap.dto.DateTimeWeatherDto;
 import com.aradosevic.openweathermap.openweathermap.dto.factory.CityDtoFactory;
 import com.aradosevic.openweathermap.openweathermap.dto.factory.DateTimeWeatherFactory;
+import com.aradosevic.openweathermap.openweathermap.exception.NotFoundException;
+import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.Keys;
 import com.aradosevic.openweathermap.openweathermap.repository.CityRepository;
 import com.aradosevic.openweathermap.openweathermap.repository.DateTimeWeatherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,8 @@ public class WeatherService {
     }
 
     public CityDto getCityAverageAfterDate(long date, String cityName) {
-        City city = cityRepository.findByName(cityName);
+        City city = cityRepository.findByName(cityName)
+            .orElseThrow(() -> new NotFoundException(Keys.CITY_BY_NAME_NOT_FOUND, cityName));
         CityDto dto = CityDtoFactory.from(city);
         Date afterDate = new Date(date * 1000);
 
@@ -44,7 +47,8 @@ public class WeatherService {
     }
 
     public CityDto getCityAverageBeforeDate(long date, String cityName) {
-        City city = cityRepository.findByName(cityName);
+        City city = cityRepository.findByName(cityName)
+            .orElseThrow(() -> new NotFoundException(Keys.CITY_BY_NAME_NOT_FOUND, cityName));
         CityDto dto = CityDtoFactory.from(city);
         Date beforeDate = new Date(date * 1000);
 
@@ -88,7 +92,8 @@ public class WeatherService {
     }
 
     public CityDto getCityAverage(String cityName) {
-        City city = cityRepository.findByName(cityName);
+        City city = cityRepository.findByName(cityName)
+            .orElseThrow(() -> new NotFoundException(Keys.CITY_BY_NAME_NOT_FOUND, cityName));
         CityDto dto = CityDtoFactory.from(city);
 
         dto.setAverageTemp(getAverage(dto.getDateTimeWeathers()));

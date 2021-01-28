@@ -5,7 +5,9 @@ import com.aradosevic.openweathermap.openweathermap.dto.DatesDto;
 import com.aradosevic.openweathermap.openweathermap.dto.SpecificDatesDto;
 import com.aradosevic.openweathermap.openweathermap.dto.factory.CityDtoFactory;
 import com.aradosevic.openweathermap.openweathermap.dto.openweathermap.TimeDataDto;
+import com.aradosevic.openweathermap.openweathermap.exception.NotFoundException;
 import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.DefaultMessages;
+import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.Keys;
 import com.aradosevic.openweathermap.openweathermap.repository.CityRepository;
 import com.aradosevic.openweathermap.openweathermap.repository.DateTimeWeatherRepository;
 import com.aradosevic.openweathermap.openweathermap.service.WeatherService;
@@ -41,20 +43,15 @@ public class WeatherController {
 
     @ApiOperation(value = "Get weather for all cities")
     @ApiResponses(
-            value = {
-                    @ApiResponse(
-                            code = 200,
-                            message = "Weathers",
-                            response = TimeDataDto.class,
-                            responseContainer = "List")
-                    ,
-                    @ApiResponse(code = 500, message = DefaultMessages.INTERNAL_SERVER_ERROR)
-            })
-    @GetMapping
-    public ResponseEntity<TimeDataDto> getWeatherForAllCities() {
-        return ResponseEntity.ok(TimeDataDto.builder().build());
-    }
-
+        value = {
+            @ApiResponse(
+                code = 200,
+                message = "Weathers",
+                response = CityDto.class,
+                responseContainer = "List")
+            ,
+            @ApiResponse(code = 500, message = DefaultMessages.INTERNAL_SERVER_ERROR)
+        })
     @GetMapping("/cities")
     public ResponseEntity<List<CityDto>> getAvailableCities() {
         return ResponseEntity.ok(cityRepository.findAll().stream().map(CityDtoFactory::from).collect(Collectors.toList()));
@@ -107,7 +104,9 @@ public class WeatherController {
 
     @GetMapping("/{cityName}/temp")
     public ResponseEntity<CityDto> getCityTemperature(@PathVariable String cityName) {
-        return ResponseEntity.ok(CityDtoFactory.from(cityRepository.findByName(cityName)));
+        return ResponseEntity.ok(CityDtoFactory.from(cityRepository.findByName(cityName)
+            .orElseThrow(() -> new NotFoundException(Keys.CITY_BY_NAME_NOT_FOUND, cityName))
+        ));
     }
 
     @GetMapping("/{cityName}/average")

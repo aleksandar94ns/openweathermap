@@ -16,7 +16,8 @@ public enum ErrorMessage {
     RESOURCE_NOT_FOUND(Keys.RESOURCE_NOT_FOUND, DefaultMessages.RESOURCE_NOT_FOUND),
     BAD_REQUEST(Keys.BAD_REQUEST, DefaultMessages.BAD_REQUEST),
 
-    CATEGORY_NOT_FOUND(Keys.CATEGORY_NOT_FOUND, DefaultMessages.CATEGORY_NOT_FOUND);
+    CITY_NOT_FOUND(Keys.CITY_NOT_FOUND, DefaultMessages.CITY_NOT_FOUND),
+    CITY_BY_NAME_NOT_FOUND(Keys.CITY_BY_NAME_NOT_FOUND, DefaultMessages.CITY_BY_NAME_NOT_FOUND);
 
     private final String key;
     private final String defaultMessage;
@@ -41,8 +42,8 @@ public enum ErrorMessage {
         public static final String RESOURCE_NOT_FOUND = "resource.not.found";
         public static final String BAD_REQUEST = "bad.request";
 
-        public static final String CATEGORY_NOT_FOUND = "category.not.found";
-
+        public static final String CITY_NOT_FOUND = "city.not.found";
+        public static final String CITY_BY_NAME_NOT_FOUND = "city.by.name.not.found";
     }
 
     /**
@@ -54,7 +55,8 @@ public enum ErrorMessage {
         public static final String RESOURCE_NOT_FOUND = "Resource not found";
         public static final String BAD_REQUEST = "Bad request";
 
-        public static final String CATEGORY_NOT_FOUND = "Category [id: {%s}] not found";
+        public static final String CITY_NOT_FOUND = "City [id: {%s}] not found";
+        public static final String CITY_BY_NAME_NOT_FOUND = "City [name: {%s}] not found";
     }
 }
 
