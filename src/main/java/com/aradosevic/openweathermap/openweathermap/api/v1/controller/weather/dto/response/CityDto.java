@@ -1,4 +1,4 @@
-package com.aradosevic.openweathermap.openweathermap.dto;
+package com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.response;
 
 import java.util.List;
 import lombok.Builder;

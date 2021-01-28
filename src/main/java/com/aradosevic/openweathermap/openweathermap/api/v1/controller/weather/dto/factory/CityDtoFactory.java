@@ -1,7 +1,7 @@
-package com.aradosevic.openweathermap.openweathermap.dto.factory;
+package com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.factory;
 
 import com.aradosevic.openweathermap.openweathermap.domain.City;
-import com.aradosevic.openweathermap.openweathermap.dto.CityDto;
+import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.response.CityDto;
 import java.util.stream.Collectors;
 
 public class CityDtoFactory {

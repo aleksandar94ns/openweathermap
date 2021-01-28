@@ -1,15 +1,13 @@
-package com.aradosevic.openweathermap.openweathermap.service;
+package com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.service;
 
 import com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties;
 import com.aradosevic.openweathermap.openweathermap.domain.City;
-import com.aradosevic.openweathermap.openweathermap.dto.CityDto;
-import com.aradosevic.openweathermap.openweathermap.dto.DateTimeWeatherDto;
-import com.aradosevic.openweathermap.openweathermap.dto.factory.CityDtoFactory;
-import com.aradosevic.openweathermap.openweathermap.dto.factory.DateTimeWeatherFactory;
-import com.aradosevic.openweathermap.openweathermap.exception.NotFoundException;
-import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.Keys;
-import com.aradosevic.openweathermap.openweathermap.repository.CityRepository;
-import com.aradosevic.openweathermap.openweathermap.repository.DateTimeWeatherRepository;
+import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.response.CityDto;
+import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.response.DateTimeWeatherDto;
+import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.factory.CityDtoFactory;
+import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.factory.DateTimeWeatherFactory;
+import com.aradosevic.openweathermap.openweathermap.service.CityService;
+import com.aradosevic.openweathermap.openweathermap.service.DateTimeWeatherService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,43 +17,48 @@ import org.springframework.stereotype.Service;
 @Service
 public class WeatherService {
 
+  private final Integer SECONDS_TO_MILLISECONDS = 1000;
+
   private final CityService cityService;
-  private final DateTimeWeatherRepository dateTimeWeatherRepository;
+  private final DateTimeWeatherService dateTimeWeatherService;
   private final ClientAppProperties clientAppProperties;
 
   @Autowired
   public WeatherService(CityService cityService,
-      DateTimeWeatherRepository dateTimeWeatherRepository,
+      DateTimeWeatherService dateTimeWeatherService,
       ClientAppProperties clientAppProperties) {
     this.cityService = cityService;
-    this.dateTimeWeatherRepository = dateTimeWeatherRepository;
+    this.dateTimeWeatherService = dateTimeWeatherService;
     this.clientAppProperties = clientAppProperties;
   }
 
   public CityDto getCityAverageAfterDate(long date, String cityName) {
-    City city = cityService.findByName(cityName);
-    CityDto dto = CityDtoFactory.getInstance(city);
-    Date afterDate = new Date(date * 1000);
+    //TODO: Refactor this, quick check if city exists
+    cityService.findByName(cityName);
 
     List<DateTimeWeatherDto> dateDto = DateTimeWeatherFactory.getList(
-        dateTimeWeatherRepository.findByCityNameAndTimestampAfter(cityName, afterDate));
-    dto.setDateTimeWeathers(dateDto);
-    dto.setAverageTemp(getAverage(dateDto));
+        dateTimeWeatherService.findAllByCityNameAndAfterDate(cityName, new Date(date * SECONDS_TO_MILLISECONDS)));
 
-    return dto;
+    return CityDto.builder()
+        .name(cityName)
+        .dateTimeWeathers(dateDto)
+        .averageTemp(getAverage(dateDto))
+        .build();
   }
 
   public CityDto getCityAverageBeforeDate(long date, String cityName) {
-    City city = cityService.findByName(cityName);
-    CityDto dto = CityDtoFactory.getInstance(city);
-    Date beforeDate = new Date(date * 1000);
+    //TODO: Refactor this, quick check if city exists
+    cityService.findByName(cityName);
 
     List<DateTimeWeatherDto> dateDto = DateTimeWeatherFactory.getList(
-        dateTimeWeatherRepository.findByCityNameAndTimestampBefore(cityName, beforeDate));
-    dto.setDateTimeWeathers(dateDto);
-    dto.setAverageTemp(getAverage(dateDto));
+        dateTimeWeatherService
+            .findAllByCityNameAndBeforeDate(cityName, new Date(date * SECONDS_TO_MILLISECONDS)));
 
-    return dto;
+    return CityDto.builder()
+        .name(cityName)
+        .dateTimeWeathers(dateDto)
+        .averageTemp(getAverage(dateDto))
+        .build();
   }
 
   public List<CityDto> getCitiesAverageBetweenDates(long start, long end) {
@@ -73,7 +76,7 @@ public class WeatherService {
     Date endDate = new Date(end * 1000);
 
     List<DateTimeWeatherDto> dateDto = DateTimeWeatherFactory.getList(
-        dateTimeWeatherRepository.findByCityNameAndTimestampBetween(cityName, startDate, endDate));
+        dateTimeWeatherService.findAllByCityNameAndBetweenDates(cityName, startDate, endDate));
     dto.setDateTimeWeathers(dateDto);
     dto.setAverageTemp(getAverage(dateDto));
     dto.setName(cityName);

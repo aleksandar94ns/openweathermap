@@ -8,8 +8,8 @@ import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessa
 import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.Keys;
 import com.aradosevic.openweathermap.openweathermap.openweather.dto.OpenWeatherAppDto;
 import com.aradosevic.openweathermap.openweathermap.openweather.dto.TimeDataDto;
-import com.aradosevic.openweathermap.openweathermap.repository.CityRepository;
-import com.aradosevic.openweathermap.openweathermap.repository.DateTimeWeatherRepository;
+import com.aradosevic.openweathermap.openweathermap.service.CityService;
+import com.aradosevic.openweathermap.openweathermap.service.DateTimeWeatherService;
 import java.util.Date;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +30,17 @@ public class OpenWeatherMapCommandLine implements CommandLineRunner {
 
   private final RestTemplate restTemplate;
   private final ClientAppProperties config;
-  private final CityRepository cityRepository;
-  private final DateTimeWeatherRepository dateTimeWeatherRepository;
+  private final CityService cityService;
+  private final DateTimeWeatherService dateTimeWeatherService;
 
   @Autowired
   public OpenWeatherMapCommandLine(RestTemplateBuilder restTemplateBuilder,
-      ClientAppProperties config,
-      CityRepository cityRepository, DateTimeWeatherRepository dateTimeWeatherRepository) {
+      ClientAppProperties config, CityService cityService,
+      DateTimeWeatherService dateTimeWeatherService) {
     restTemplate = restTemplateBuilder.build();
     this.config = config;
-    this.cityRepository = cityRepository;
-    this.dateTimeWeatherRepository = dateTimeWeatherRepository;
+    this.cityService = cityService;
+    this.dateTimeWeatherService = dateTimeWeatherService;
   }
 
   @Override
@@ -64,7 +64,7 @@ public class OpenWeatherMapCommandLine implements CommandLineRunner {
    */
   private void saveCity(String cityName) {
     City city = City.builder().name(cityName).build();
-    cityRepository.save(city);
+    cityService.save(city);
     fetchTemperatures(city);
   }
 
@@ -98,7 +98,7 @@ public class OpenWeatherMapCommandLine implements CommandLineRunner {
   private void saveTemperature(TimeDataDto timeDataDto, City city) {
     final Integer secondsToMilliseconds = 1000;
 
-    dateTimeWeatherRepository.save(
+    dateTimeWeatherService.save(
         DateTimeWeather.builder()
             .city(city)
             .timestamp(new Date(timeDataDto.getTimestamp() * secondsToMilliseconds))

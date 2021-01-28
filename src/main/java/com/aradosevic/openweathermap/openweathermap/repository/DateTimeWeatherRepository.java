@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 //TODO: Make these optional, requires more exception handling
+//TODO: Would use DateTimeWeatherDb class instead of DateTimeWeather, but would overcomplicate the project
 public interface DateTimeWeatherRepository extends JpaRepository<DateTimeWeather, Long> {
 
   //TODO: Can be deleted

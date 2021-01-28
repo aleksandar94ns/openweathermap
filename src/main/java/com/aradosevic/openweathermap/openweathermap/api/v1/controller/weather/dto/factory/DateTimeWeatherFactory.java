@@ -1,7 +1,7 @@
-package com.aradosevic.openweathermap.openweathermap.dto.factory;
+package com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.factory;
 
+import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.response.DateTimeWeatherDto;
 import com.aradosevic.openweathermap.openweathermap.domain.DateTimeWeather;
-import com.aradosevic.openweathermap.openweathermap.dto.DateTimeWeatherDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
