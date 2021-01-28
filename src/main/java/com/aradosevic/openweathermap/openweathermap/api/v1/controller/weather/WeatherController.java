@@ -57,7 +57,7 @@ public class WeatherController {
       })
   @GetMapping("/cities")
   public ResponseEntity<List<CityDto>> getAvailableCities() {
-    return ResponseEntity.ok(cityRepository.findAll().stream().map(CityDtoFactory::getInstance)
+    return ResponseEntity.ok(cityRepository.findAll().stream().map(CityDtoFactory::getInstanceWithName)
         .collect(Collectors.toList()));
   }
 

@@ -21,6 +21,10 @@ public class DateTimeWeatherService {
     return repository.save(dateTimeWeather);
   }
 
+  public List<DateTimeWeather> findByCityName(String cityName) {
+    return repository.findByCityName(cityName);
+  }
+
   public List<DateTimeWeather> findAllByCityNameAndAfterDate(String cityName, Date afterDate) {
     return repository.findByCityNameAndTimestampAfter(cityName, afterDate);
   }
