@@ -13,12 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Component
 @Log4j2
-public class OpenWeatherMapService implements CommandLineRunner {
+public class OpenWeatherMapCommandLine implements CommandLineRunner {
 
     private final RestTemplate restTemplate;
     private final ClientAppProperties config;
@@ -26,7 +25,7 @@ public class OpenWeatherMapService implements CommandLineRunner {
     private final DateTimeWeatherRepository dateTimeWeatherRepository;
 
     @Autowired
-    public OpenWeatherMapService(RestTemplateBuilder restTemplateBuilder, ClientAppProperties config,
+    public OpenWeatherMapCommandLine(RestTemplateBuilder restTemplateBuilder, ClientAppProperties config,
                                  CityRepository cityRepository, DateTimeWeatherRepository dateTimeWeatherRepository) {
         restTemplate = restTemplateBuilder.build();
         this.config = config;
