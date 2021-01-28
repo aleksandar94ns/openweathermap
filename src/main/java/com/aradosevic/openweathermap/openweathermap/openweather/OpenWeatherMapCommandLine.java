@@ -15,6 +15,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,9 +25,10 @@ import org.springframework.web.client.RestTemplate;
  * <p>
  * Api key can be set in application.properties
  */
+@Profile("!cityServiceTest")
 @Component
 @Log4j2
-public class OpenWeatherMapCommandLine implements CommandLineRunner {
+public class OpenWeatherMapCommandLine {
 
   private final RestTemplate restTemplate;
   private final ClientAppProperties config;
@@ -41,10 +43,6 @@ public class OpenWeatherMapCommandLine implements CommandLineRunner {
     this.config = config;
     this.cityService = cityService;
     this.dateTimeWeatherService = dateTimeWeatherService;
-  }
-
-  @Override
-  public void run(String... args) {
     populateData();
   }
 
