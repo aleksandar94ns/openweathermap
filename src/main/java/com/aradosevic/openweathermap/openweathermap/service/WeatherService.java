@@ -19,22 +19,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class WeatherService {
 
-  private final CityRepository cityRepository;
+  private final CityService cityService;
   private final DateTimeWeatherRepository dateTimeWeatherRepository;
   private final ClientAppProperties clientAppProperties;
 
   @Autowired
-  public WeatherService(CityRepository cityRepository,
+  public WeatherService(CityService cityService,
       DateTimeWeatherRepository dateTimeWeatherRepository,
       ClientAppProperties clientAppProperties) {
-    this.cityRepository = cityRepository;
+    this.cityService = cityService;
     this.dateTimeWeatherRepository = dateTimeWeatherRepository;
     this.clientAppProperties = clientAppProperties;
   }
 
   public CityDto getCityAverageAfterDate(long date, String cityName) {
-    City city = cityRepository.findByName(cityName)
-        .orElseThrow(() -> new NotFoundException(Keys.CITY_BY_NAME_NOT_FOUND, cityName));
+    City city = cityService.findByName(cityName);
     CityDto dto = CityDtoFactory.getInstance(city);
     Date afterDate = new Date(date * 1000);
 
@@ -47,8 +46,7 @@ public class WeatherService {
   }
 
   public CityDto getCityAverageBeforeDate(long date, String cityName) {
-    City city = cityRepository.findByName(cityName)
-        .orElseThrow(() -> new NotFoundException(Keys.CITY_BY_NAME_NOT_FOUND, cityName));
+    City city = cityService.findByName(cityName);
     CityDto dto = CityDtoFactory.getInstance(city);
     Date beforeDate = new Date(date * 1000);
 
@@ -92,8 +90,7 @@ public class WeatherService {
   }
 
   public CityDto getCityAverage(String cityName) {
-    City city = cityRepository.findByName(cityName)
-        .orElseThrow(() -> new NotFoundException(Keys.CITY_BY_NAME_NOT_FOUND, cityName));
+    City city = cityService.findByName(cityName);
     CityDto dto = CityDtoFactory.getInstance(city);
 
     dto.setAverageTemp(getAverage(dto.getDateTimeWeathers()));
