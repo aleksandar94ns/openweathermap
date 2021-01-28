@@ -10,13 +10,15 @@ import com.aradosevic.openweathermap.openweathermap.repository.DateTimeWeatherRe
 import java.util.Date;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-@Service
+@Component
 @Log4j2
-public class OpenWeatherMapService {
+public class OpenWeatherMapService implements CommandLineRunner {
 
     private final RestTemplate restTemplate;
     private final ClientAppProperties config;
@@ -30,6 +32,11 @@ public class OpenWeatherMapService {
         this.config = config;
         this.cityRepository = cityRepository;
         this.dateTimeWeatherRepository = dateTimeWeatherRepository;
+    }
+
+    @Override
+    public void run(String... args) {
+        fetchData();
     }
 
     public void fetchData() {
