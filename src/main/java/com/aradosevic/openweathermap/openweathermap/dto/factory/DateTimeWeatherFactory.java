@@ -18,6 +18,7 @@ public class DateTimeWeatherFactory {
   }
 
   public static List<DateTimeWeatherDto> getList(List<DateTimeWeather> dateTimeWeathers) {
-    return dateTimeWeathers.stream().map(DateTimeWeatherFactory::getInstance).collect(Collectors.toList());
+    return dateTimeWeathers.stream().map(DateTimeWeatherFactory::getInstance)
+        .collect(Collectors.toList());
   }
 }

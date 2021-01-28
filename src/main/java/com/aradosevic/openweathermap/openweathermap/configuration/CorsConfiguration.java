@@ -1,6 +1,5 @@
 package com.aradosevic.openweathermap.openweathermap.configuration;
 
-import com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

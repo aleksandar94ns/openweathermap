@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Data
 @ConfigurationProperties("custom.client-app")
 public class ClientAppProperties {
+
   private String city1;
   private String city2;
   private String city3;

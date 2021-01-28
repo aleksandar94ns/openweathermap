@@ -14,9 +14,10 @@ public interface DateTimeWeatherRepository extends JpaRepository<DateTimeWeather
   /**
    * Query to find all {@link DateTimeWeather} instances where given parameters match
    *
-   * @param cityName {@link String} used to filter by {@link com.aradosevic.openweathermap.openweathermap.domain.City} name
+   * @param cityName  {@link String} used to filter by {@link com.aradosevic.openweathermap.openweathermap.domain.City}
+   *                  name
    * @param startDate used to search for all instances that occur after given date {@link Date}
-   * @param endDate used to search for all instances that occur before given date {@link Date}
+   * @param endDate   used to search for all instances that occur before given date {@link Date}
    * @return {@link DateTimeWeather} that matches given query parameters
    */
   List<DateTimeWeather> findByCityNameAndTimestampBetween(String cityName, Date startDate,

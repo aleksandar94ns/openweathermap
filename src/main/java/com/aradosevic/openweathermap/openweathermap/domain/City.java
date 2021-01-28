@@ -13,8 +13,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * Class that represents city in database and domain generally.
- * Contains name of the city that is being searched.
+ * Class that represents city in database and domain generally. Contains name of the city that is
+ * being searched.
  */
 @Entity
 @Getter
