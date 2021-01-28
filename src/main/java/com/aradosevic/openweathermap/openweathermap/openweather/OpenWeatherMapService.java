@@ -10,6 +10,7 @@ import com.aradosevic.openweathermap.openweathermap.openweather.dto.OpenWeatherA
 import com.aradosevic.openweathermap.openweathermap.openweather.dto.TimeDataDto;
 import com.aradosevic.openweathermap.openweathermap.service.CityService;
 import com.aradosevic.openweathermap.openweathermap.service.DateTimeWeatherService;
+import javax.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -28,26 +29,31 @@ import java.util.Date;
 @Log4j2
 public class OpenWeatherMapService {
 
-  private final RestTemplate restTemplate;
+  private final RestTemplateBuilder restTemplateBuilder;
   private final ClientAppProperties config;
   private final CityService cityService;
   private final DateTimeWeatherService dateTimeWeatherService;
+
+  private RestTemplate restTemplate;
 
   @Autowired
   public OpenWeatherMapService(RestTemplateBuilder restTemplateBuilder,
                                ClientAppProperties config, CityService cityService,
                                DateTimeWeatherService dateTimeWeatherService) {
-    restTemplate = restTemplateBuilder.build();
+    this.restTemplateBuilder = restTemplateBuilder;
     this.config = config;
     this.cityService = cityService;
     this.dateTimeWeatherService = dateTimeWeatherService;
-    populateData();
   }
 
   /**
    * Fetches data from all of the cities that are defined in application.properties.
    */
   public void populateData() {
+    //TODO: Not the best solution for initialization, added for sake of unit test
+    restTemplate = restTemplateBuilder.build();
+
+    //TODO: Check if there are values in configuration
     saveCity(config.getCity1());
     saveCity(config.getCity2());
     saveCity(config.getCity3());

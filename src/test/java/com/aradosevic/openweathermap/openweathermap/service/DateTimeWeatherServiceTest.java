@@ -85,8 +85,7 @@ public class DateTimeWeatherServiceTest {
         .build();
     List<DateTimeWeather> dateTimeWeathers = Stream.of(dateTimeWeather1, dateTimeWeather2)
         .collect(Collectors.toList());
-    when(repository.findByCityName(any()))
-        .thenReturn(Stream.of(dateTimeWeather1, dateTimeWeather2).collect(Collectors.toList()));
+    when(repository.findByCityName(any())).thenReturn(dateTimeWeathers);
 
     //when
     List<DateTimeWeather> foundDateTimeWeather = service.findByCityName(cityName);
