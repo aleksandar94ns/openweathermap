@@ -1,10 +1,9 @@
 package com.aradosevic.openweathermap.openweathermap.api.v1.controller;
 
 import com.aradosevic.openweathermap.openweathermap.dto.CityDto;
-import com.aradosevic.openweathermap.openweathermap.dto.DatesDto;
+import com.aradosevic.openweathermap.openweathermap.dto.DateDto;
 import com.aradosevic.openweathermap.openweathermap.dto.SpecificDatesDto;
 import com.aradosevic.openweathermap.openweathermap.dto.factory.CityDtoFactory;
-import com.aradosevic.openweathermap.openweathermap.dto.openweathermap.TimeDataDto;
 import com.aradosevic.openweathermap.openweathermap.exception.NotFoundException;
 import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.DefaultMessages;
 import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.Keys;
@@ -14,15 +13,18 @@ import com.aradosevic.openweathermap.openweathermap.service.WeatherService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/weather")
@@ -92,14 +94,14 @@ public class WeatherController {
 
     @GetMapping("/{cityName}/average-dates-before")
     public ResponseEntity<CityDto> getAverageBeforeDate(@PathVariable String cityName,
-                                                        @RequestBody @Valid DatesDto datesDto) {
-        return ResponseEntity.ok(weatherService.getCityAverageBeforeDate(datesDto.getDate(), cityName));
+                                                        @RequestBody @Valid DateDto dateDto) {
+        return ResponseEntity.ok(weatherService.getCityAverageBeforeDate(dateDto.getDate(), cityName));
     }
 
     @GetMapping("/{cityName}/average-dates-after")
     public ResponseEntity<CityDto> getAverageAfterDate(@PathVariable String cityName,
-                                                       @RequestBody @Valid DatesDto datesDto) {
-        return ResponseEntity.ok(weatherService.getCityAverageAfterDate(datesDto.getDate(), cityName));
+                                                       @RequestBody @Valid DateDto dateDto) {
+        return ResponseEntity.ok(weatherService.getCityAverageAfterDate(dateDto.getDate(), cityName));
     }
 
     @GetMapping("/{cityName}/temp")

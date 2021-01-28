@@ -1,6 +1,5 @@
-package com.aradosevic.openweathermap.openweathermap.dto.openweathermap;
+package com.aradosevic.openweathermap.openweathermap.openweather.openweathermap;
 
-import com.aradosevic.openweathermap.openweathermap.dto.openweathermap.MainTimeDataDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

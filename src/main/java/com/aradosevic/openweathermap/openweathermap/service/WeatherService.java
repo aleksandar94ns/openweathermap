@@ -10,12 +10,11 @@ import com.aradosevic.openweathermap.openweathermap.exception.NotFoundException;
 import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.Keys;
 import com.aradosevic.openweathermap.openweathermap.repository.CityRepository;
 import com.aradosevic.openweathermap.openweathermap.repository.DateTimeWeatherRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class WeatherService {

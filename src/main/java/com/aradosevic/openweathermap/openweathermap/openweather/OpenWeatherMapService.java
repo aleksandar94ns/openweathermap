@@ -3,17 +3,16 @@ package com.aradosevic.openweathermap.openweathermap.openweather;
 import com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties;
 import com.aradosevic.openweathermap.openweathermap.domain.City;
 import com.aradosevic.openweathermap.openweathermap.domain.DateTimeWeather;
-import com.aradosevic.openweathermap.openweathermap.dto.openweathermap.OpenWeatherAppDto;
-import com.aradosevic.openweathermap.openweathermap.dto.openweathermap.TimeDataDto;
+import com.aradosevic.openweathermap.openweathermap.openweather.openweathermap.OpenWeatherAppDto;
+import com.aradosevic.openweathermap.openweathermap.openweather.openweathermap.TimeDataDto;
 import com.aradosevic.openweathermap.openweathermap.repository.CityRepository;
 import com.aradosevic.openweathermap.openweathermap.repository.DateTimeWeatherRepository;
+import java.util.Date;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Date;
 
 @Service
 @Log4j2

@@ -1,11 +1,10 @@
 package com.aradosevic.openweathermap.openweathermap.exception.handler;
 
+import java.util.Arrays;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
-
-import java.util.Arrays;
 
 @Log4j2
 @AllArgsConstructor
