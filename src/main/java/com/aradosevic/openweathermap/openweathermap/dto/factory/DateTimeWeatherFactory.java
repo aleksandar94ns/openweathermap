@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class DateTimeWeatherFactory {
 
-  public static DateTimeWeatherDto from(DateTimeWeather dateTimeWeather) {
+  public static DateTimeWeatherDto getInstance(DateTimeWeather dateTimeWeather) {
     return DateTimeWeatherDto.builder()
         .cityId(dateTimeWeather.getCity().getId())
         .temperature(dateTimeWeather.getTemperature())
@@ -17,7 +17,7 @@ public class DateTimeWeatherFactory {
         .build();
   }
 
-  public static List<DateTimeWeatherDto> fromList(List<DateTimeWeather> dateTimeWeathers) {
-    return dateTimeWeathers.stream().map(DateTimeWeatherFactory::from).collect(Collectors.toList());
+  public static List<DateTimeWeatherDto> getList(List<DateTimeWeather> dateTimeWeathers) {
+    return dateTimeWeathers.stream().map(DateTimeWeatherFactory::getInstance).collect(Collectors.toList());
   }
 }

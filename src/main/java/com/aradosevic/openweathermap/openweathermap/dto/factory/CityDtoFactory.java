@@ -6,11 +6,13 @@ import java.util.stream.Collectors;
 
 public class CityDtoFactory {
 
-  public static CityDto from(City city) {
-    CityDto dto = new CityDto();
-    dto.setName(city.getName());
-    dto.setDateTimeWeathers(city.getDateTimeWeathers().stream().map(DateTimeWeatherFactory::from)
-        .collect(Collectors.toList()));
-    return dto;
+  public static CityDto getInstance(City city) {
+    return CityDto.builder()
+        .name(city.getName())
+        .dateTimeWeathers(city.getDateTimeWeathers() == null ?
+            null :
+            city.getDateTimeWeathers().stream().map(DateTimeWeatherFactory::getInstance)
+                .collect(Collectors.toList()))
+        .build();
   }
 }

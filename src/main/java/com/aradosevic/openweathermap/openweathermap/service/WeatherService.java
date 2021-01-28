@@ -35,10 +35,10 @@ public class WeatherService {
   public CityDto getCityAverageAfterDate(long date, String cityName) {
     City city = cityRepository.findByName(cityName)
         .orElseThrow(() -> new NotFoundException(Keys.CITY_BY_NAME_NOT_FOUND, cityName));
-    CityDto dto = CityDtoFactory.from(city);
+    CityDto dto = CityDtoFactory.getInstance(city);
     Date afterDate = new Date(date * 1000);
 
-    List<DateTimeWeatherDto> dateDto = DateTimeWeatherFactory.fromList(
+    List<DateTimeWeatherDto> dateDto = DateTimeWeatherFactory.getList(
         dateTimeWeatherRepository.findByCityNameAndTimestampAfter(cityName, afterDate));
     dto.setDateTimeWeathers(dateDto);
     dto.setAverageTemp(getAverage(dateDto));
@@ -49,10 +49,10 @@ public class WeatherService {
   public CityDto getCityAverageBeforeDate(long date, String cityName) {
     City city = cityRepository.findByName(cityName)
         .orElseThrow(() -> new NotFoundException(Keys.CITY_BY_NAME_NOT_FOUND, cityName));
-    CityDto dto = CityDtoFactory.from(city);
+    CityDto dto = CityDtoFactory.getInstance(city);
     Date beforeDate = new Date(date * 1000);
 
-    List<DateTimeWeatherDto> dateDto = DateTimeWeatherFactory.fromList(
+    List<DateTimeWeatherDto> dateDto = DateTimeWeatherFactory.getList(
         dateTimeWeatherRepository.findByCityNameAndTimestampBefore(cityName, beforeDate));
     dto.setDateTimeWeathers(dateDto);
     dto.setAverageTemp(getAverage(dateDto));
@@ -69,12 +69,12 @@ public class WeatherService {
   }
 
   public CityDto getCityAverageFromDates(long start, long end, String cityName) {
-    CityDto dto = new CityDto();
+    CityDto dto = CityDto.builder().build();
 
     Date startDate = new Date(start * 1000);
     Date endDate = new Date(end * 1000);
 
-    List<DateTimeWeatherDto> dateDto = DateTimeWeatherFactory.fromList(
+    List<DateTimeWeatherDto> dateDto = DateTimeWeatherFactory.getList(
         dateTimeWeatherRepository.findByCityNameAndTimestampBetween(cityName, startDate, endDate));
     dto.setDateTimeWeathers(dateDto);
     dto.setAverageTemp(getAverage(dateDto));
@@ -94,7 +94,7 @@ public class WeatherService {
   public CityDto getCityAverage(String cityName) {
     City city = cityRepository.findByName(cityName)
         .orElseThrow(() -> new NotFoundException(Keys.CITY_BY_NAME_NOT_FOUND, cityName));
-    CityDto dto = CityDtoFactory.from(city);
+    CityDto dto = CityDtoFactory.getInstance(city);
 
     dto.setAverageTemp(getAverage(dto.getDateTimeWeathers()));
     dto.setDateTimeWeathers(null);

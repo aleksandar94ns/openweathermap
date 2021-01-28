@@ -57,7 +57,7 @@ public class WeatherController {
       })
   @GetMapping("/cities")
   public ResponseEntity<List<CityDto>> getAvailableCities() {
-    return ResponseEntity.ok(cityRepository.findAll().stream().map(CityDtoFactory::from)
+    return ResponseEntity.ok(cityRepository.findAll().stream().map(CityDtoFactory::getInstance)
         .collect(Collectors.toList()));
   }
 
@@ -110,7 +110,7 @@ public class WeatherController {
 
   @GetMapping("/{cityName}/temp")
   public ResponseEntity<CityDto> getCityTemperature(@PathVariable String cityName) {
-    return ResponseEntity.ok(CityDtoFactory.from(cityRepository.findByName(cityName)
+    return ResponseEntity.ok(CityDtoFactory.getInstance(cityRepository.findByName(cityName)
         .orElseThrow(() -> new NotFoundException(Keys.CITY_BY_NAME_NOT_FOUND, cityName))
     ));
   }
