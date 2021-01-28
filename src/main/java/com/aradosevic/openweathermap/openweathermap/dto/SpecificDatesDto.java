@@ -8,9 +8,9 @@ import lombok.Setter;
 @Setter
 public class SpecificDatesDto {
 
-    @NotNull
-    Long startDate;
+  @NotNull
+  Long startDate;
 
-    @NotNull
-    Long endDate;
+  @NotNull
+  Long endDate;
 }

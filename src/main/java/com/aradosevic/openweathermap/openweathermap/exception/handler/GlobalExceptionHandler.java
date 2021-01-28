@@ -41,7 +41,8 @@ public class GlobalExceptionHandler {
             .messageKey(e.getMessage())
             .defaultMessage(
                 e.getId() == null ?
-                    String.format(ErrorMessage.from(e.getMessage()).getDefaultMessage(), e.getParameter())
+                    String.format(ErrorMessage.from(e.getMessage()).getDefaultMessage(),
+                        e.getParameter())
                     : String
                         .format(ErrorMessage.from(e.getMessage()).getDefaultMessage(), e.getId()))
             .build();

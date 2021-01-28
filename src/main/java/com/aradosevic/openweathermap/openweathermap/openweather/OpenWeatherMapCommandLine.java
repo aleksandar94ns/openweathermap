@@ -60,8 +60,7 @@ public class OpenWeatherMapCommandLine implements CommandLineRunner {
    * @param cityName - Name of the city that is being saved
    */
   private void saveCity(String cityName) {
-    City city = new City();
-    city.setName(cityName);
+    City city = City.builder().name(cityName).build();
     cityRepository.save(city);
     fetchTemperatures(city);
   }
@@ -83,8 +82,10 @@ public class OpenWeatherMapCommandLine implements CommandLineRunner {
    * Convert {@link TimeDataDto} values into {@link DateTimeWeather} and save them into repository
    * for provided {@link City}.
    *
-   * @param timeDataDto {@link TimeDataDto} values from API that need to be converted into {@link DateTimeWeather}
-   * @param city {@link City} that will be attached as parent for newly created {@link DateTimeWeather}
+   * @param timeDataDto {@link TimeDataDto} values from API that need to be converted into {@link
+   *                    DateTimeWeather}
+   * @param city        {@link City} that will be attached as parent for newly created {@link
+   *                    DateTimeWeather}
    */
   private void saveTemperature(TimeDataDto timeDataDto, City city) {
     final Integer secondsToMilliseconds = 1000;

@@ -11,27 +11,32 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Data
-@Table(name = "date_time_weather")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
+@Table(name = "date_time_weather")
 public class DateTimeWeather {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "city", nullable = false)
-    private City city;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "city", nullable = false)
+  private City city;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timestamp;
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date timestamp;
 
-    private Double temperature;
-    private Double minTemp;
-    private Double maxTemp;
+  private Double temperature;
+  private Double minTemp;
+  private Double maxTemp;
 }

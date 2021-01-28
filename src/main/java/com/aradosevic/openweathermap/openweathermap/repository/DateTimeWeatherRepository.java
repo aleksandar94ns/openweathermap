@@ -7,11 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DateTimeWeatherRepository extends JpaRepository<DateTimeWeather, Long> {
 
-    List<DateTimeWeather> findByCityName(String cityName);
+  List<DateTimeWeather> findByCityName(String cityName);
 
-    List<DateTimeWeather> findByCityNameAndTimestampBetween(String cityName, Date startDate, Date endDate);
+  List<DateTimeWeather> findByCityNameAndTimestampBetween(String cityName, Date startDate,
+      Date endDate);
 
-    List<DateTimeWeather> findByCityNameAndTimestampBefore(String cityName, Date endDate);
+  List<DateTimeWeather> findByCityNameAndTimestampBefore(String cityName, Date endDate);
 
-    List<DateTimeWeather> findByCityNameAndTimestampAfter(String cityName, Date startDate);
+  List<DateTimeWeather> findByCityNameAndTimestampAfter(String cityName, Date startDate);
 }

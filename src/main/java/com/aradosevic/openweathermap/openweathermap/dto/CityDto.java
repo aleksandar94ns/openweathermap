@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class CityDto {
 
-    String name;
-    List<DateTimeWeatherDto> dateTimeWeathers;
-    Double averageTemp;
+  String name;
+  List<DateTimeWeatherDto> dateTimeWeathers;
+  Double averageTemp;
 }

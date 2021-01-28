@@ -6,17 +6,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DateTimeWeatherFactory {
-    public static DateTimeWeatherDto from(DateTimeWeather dateTimeWeather) {
-        DateTimeWeatherDto dto = new DateTimeWeatherDto();
-        dto.setCityId(dateTimeWeather.getCity().getId());
-        dto.setTemperature(dateTimeWeather.getTemperature());
-        dto.setTimestamp(dateTimeWeather.getTimestamp().getTime());
-        dto.setMaxTemp(dateTimeWeather.getMaxTemp());
-        dto.setMinTemp(dateTimeWeather.getMinTemp());
-        return dto;
-    }
 
-    public static List<DateTimeWeatherDto> fromList(List<DateTimeWeather> dateTimeWeathers) {
-        return dateTimeWeathers.stream().map(DateTimeWeatherFactory::from).collect(Collectors.toList());
-    }
+  public static DateTimeWeatherDto from(DateTimeWeather dateTimeWeather) {
+    return DateTimeWeatherDto.builder()
+        .cityId(dateTimeWeather.getCity().getId())
+        .temperature(dateTimeWeather.getTemperature())
+        .maxTemp(dateTimeWeather.getMaxTemp())
+        .minTemp(dateTimeWeather.getMinTemp())
+        .timestamp(dateTimeWeather.getTimestamp().getTime())
+        .build();
+  }
+
+  public static List<DateTimeWeatherDto> fromList(List<DateTimeWeather> dateTimeWeathers) {
+    return dateTimeWeathers.stream().map(DateTimeWeatherFactory::from).collect(Collectors.toList());
+  }
 }

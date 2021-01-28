@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 public class DateDto {
 
-    @NotNull
-    Long date;
+  @NotNull
+  Long date;
 }
