@@ -74,6 +74,15 @@ public class WeatherService {
     //TODO: Refactor this, quick check if city exists
     cityService.findByName(cityName);
 
-    return CityDtoFactory.getCityWithAverage(cityName, dateTimeWeatherService.findByCityName(cityName));
+    return CityDtoFactory
+        .getCityWithAverage(cityName, dateTimeWeatherService.findByCityName(cityName));
+  }
+
+  public List<CityDto> getAverageForCitiesBetweenDates(List<String> cities, long start, long end) {
+    List<CityDto> cityDtoList = new ArrayList<>();
+    for (String city : cities) {
+      cityDtoList.add(getCityAverageFromDates(start, end, city));
+    }
+    return cityDtoList;
   }
 }

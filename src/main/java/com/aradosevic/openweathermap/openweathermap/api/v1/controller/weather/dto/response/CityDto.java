@@ -13,7 +13,7 @@ public class CityDto {
   @JsonInclude(Include.NON_NULL)
   String name;
 
-  @JsonInclude(Include.NON_NULL)
+  @JsonInclude(Include.NON_EMPTY)
   List<DateTimeWeatherDto> dateTimeWeathers;
 
   @JsonInclude(Include.NON_NULL)

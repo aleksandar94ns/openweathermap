@@ -1,15 +1,16 @@
 package com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather;
 
-import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.response.CityDto;
+import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.factory.CityDtoFactory;
+import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.request.CitiesAndDatesDto;
 import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.request.DateDto;
 import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.request.SpecificDatesDto;
-import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.factory.CityDtoFactory;
+import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.response.CityDto;
+import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.service.WeatherService;
 import com.aradosevic.openweathermap.openweathermap.exception.NotFoundException;
 import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.DefaultMessages;
 import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.Keys;
 import com.aradosevic.openweathermap.openweathermap.repository.CityRepository;
 import com.aradosevic.openweathermap.openweathermap.repository.DateTimeWeatherRepository;
-import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.service.WeatherService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -22,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,8 +59,9 @@ public class WeatherController {
       })
   @GetMapping("/cities")
   public ResponseEntity<List<CityDto>> getAvailableCities() {
-    return ResponseEntity.ok(cityRepository.findAll().stream().map(CityDtoFactory::getInstanceWithName)
-        .collect(Collectors.toList()));
+    return ResponseEntity
+        .ok(cityRepository.findAll().stream().map(CityDtoFactory::getInstanceWithName)
+            .collect(Collectors.toList()));
   }
 
   @GetMapping("/cities/average")
@@ -118,5 +121,14 @@ public class WeatherController {
   @GetMapping("/{cityName}/average")
   public ResponseEntity<CityDto> getCityAverage(@PathVariable String cityName) {
     return ResponseEntity.ok(weatherService.getCityAverage(cityName));
+  }
+
+  @PostMapping("/average-between")
+  public ResponseEntity<List<CityDto>> getCityAverage(
+      @RequestBody @Valid CitiesAndDatesDto citiesAndDatesDto) {
+    return ResponseEntity.ok(weatherService
+        .getAverageForCitiesBetweenDates(citiesAndDatesDto.getCities(),
+            citiesAndDatesDto.getDatesDto().getStartDate(),
+            citiesAndDatesDto.getDatesDto().getEndDate()));
   }
 }

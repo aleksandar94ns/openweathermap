@@ -9,7 +9,7 @@ public class WeatherUtilities {
 
   public Double getAverageForData(List<DateTimeWeather> dateTimeWeathers) {
     //TODO: Quick check if list is empty, can be written better
-    if (dateTimeWeathers == null) {
+    if (dateTimeWeathers == null || dateTimeWeathers.isEmpty()) {
       return null;
     }
 
