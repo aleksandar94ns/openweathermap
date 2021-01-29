@@ -19,10 +19,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * Command line runner class that is being called on application startup to fetch and populate data
+ * Component class that is used for fetch and populating data into the database
  * from https://openweathermap.org/ site with given API key.
  * <p>
- * Api key can be set in application.properties
+ * Api key can be set or changed in the application.properties
  */
 @Component
 @Log4j2
@@ -45,6 +45,9 @@ public class OpenWeatherMapService {
     this.dateTimeWeatherService = dateTimeWeatherService;
   }
 
+  /**
+   * Execute fetching and population of data once constructor has been initialized.
+   */
   @PostConstruct
   void init() {
     populateData();

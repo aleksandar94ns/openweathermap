@@ -2,6 +2,9 @@ package com.aradosevic.openweathermap.openweathermap.exception;
 
 import lombok.Getter;
 
+/**
+ * Custom {@link RuntimeException} class used for custom exception messages within the application.
+ */
 @Getter
 public class NotFoundException extends RuntimeException {
 

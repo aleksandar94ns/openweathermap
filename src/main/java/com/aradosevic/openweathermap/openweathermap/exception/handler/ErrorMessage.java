@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * Enum of predefined custom error messages used for exceptions.
+ */
 @Log4j2
 @AllArgsConstructor
 @Getter

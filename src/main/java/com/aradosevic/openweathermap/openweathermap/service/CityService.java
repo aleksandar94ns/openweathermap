@@ -8,6 +8,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service used for communicating with {@link CityRepository}.
+ *
+ * It should always receive and respond with domain models.
+ */
 @Service
 public class CityService {
 

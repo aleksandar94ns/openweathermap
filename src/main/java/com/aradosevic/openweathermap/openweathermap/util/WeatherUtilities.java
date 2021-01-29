@@ -4,6 +4,13 @@ import com.aradosevic.openweathermap.openweathermap.domain.DateTimeWeather;
 import java.util.List;
 import lombok.experimental.UtilityClass;
 
+/**
+ * Simple utility class that generates static methods.
+ *
+ * Currently only used for getting average temperature from the list of {@link DateTimeWeather} data.
+ *
+ * Can be expanded down the line with additional utilities.
+ */
 @UtilityClass
 public class WeatherUtilities {
 

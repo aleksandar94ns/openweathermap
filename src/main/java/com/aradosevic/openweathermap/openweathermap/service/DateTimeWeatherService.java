@@ -1,12 +1,18 @@
 package com.aradosevic.openweathermap.openweathermap.service;
 
 import com.aradosevic.openweathermap.openweathermap.domain.DateTimeWeather;
+import com.aradosevic.openweathermap.openweathermap.repository.CityRepository;
 import com.aradosevic.openweathermap.openweathermap.repository.DateTimeWeatherRepository;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service used for communicating with {@link DateTimeWeatherRepository}.
+ *
+ * It should always receive and respond with domain models.
+ */
 @Service
 public class DateTimeWeatherService {
 

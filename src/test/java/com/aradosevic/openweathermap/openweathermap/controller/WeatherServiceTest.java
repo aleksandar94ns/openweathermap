@@ -3,7 +3,6 @@ package com.aradosevic.openweathermap.openweathermap.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -39,7 +38,10 @@ public class WeatherServiceTest {
   private DateTimeWeatherService dateTimeWeatherService;
 
   /**
-   * Test creating {@link CityDto} with {@link DateTimeWeather} 
+   * Test creating {@link CityDto} with {@link DateTimeWeather} aggregated into human readable
+   * format.
+   * <p>
+   * {@link CityDto} should not null for average temperature property.
    */
   @Test
   void getCityTemperatures() {
@@ -75,8 +77,15 @@ public class WeatherServiceTest {
     assertEquals(cityName, cityDto.getName());
     assertEquals(cityName, city.getName());
     assertEquals(city.getDateTimeWeathers().size(), cityDto.getDateTimeWeathers().size());
+    assertNull(cityDto.getAverageTemp());
   }
 
+  /**
+   * Test creating {@link CityDto} with {@link DateTimeWeather} aggregated into human readable
+   * format.
+   * <p>
+   * {@link CityDto} should not null for average temperature property.
+   */
   @Test
   void getAverageForAllCities() {
     //given
