@@ -32,19 +32,19 @@ import org.springframework.web.client.RestTemplate;
 public class OpenWeatherMapServiceTest {
 
   @InjectMocks
-  OpenWeatherMapService openWeatherMapService;
+  private OpenWeatherMapService openWeatherMapService;
 
   @Mock
-  CityService cityService;
+  private CityService cityService;
 
   @Mock
-  DateTimeWeatherService dateTimeWeatherService;
+  private DateTimeWeatherService dateTimeWeatherService;
 
   @Mock
-  RestTemplateBuilder restTemplateBuilder;
+  private RestTemplateBuilder restTemplateBuilder;
 
   @Mock
-  ClientAppProperties clientAppProperties;
+  private ClientAppProperties clientAppProperties;
 
   @Test
   void testPopulation() {

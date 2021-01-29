@@ -22,10 +22,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class DateTimeWeatherServiceTest {
 
   @InjectMocks
-  DateTimeWeatherService service;
+  private DateTimeWeatherService service;
 
   @Mock
-  DateTimeWeatherRepository repository;
+  private DateTimeWeatherRepository repository;
 
   @Test
   void saveTest() {
