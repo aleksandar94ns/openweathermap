@@ -48,7 +48,7 @@ public class OpenWeatherMapServiceTest {
 
   @Test
   void testPopulation() {
-    //when
+    //given
     String cityName1 = "London";
     when(clientAppProperties.getCity1()).thenReturn(cityName1);
     String cityName2 = "Tokyo";
@@ -72,14 +72,14 @@ public class OpenWeatherMapServiceTest {
     dto.setCnt(10);
 
     List<TimeDataDto> dataDtos = new ArrayList<>();
-    Date date = new Date();
-
     DateTimeWeather dateTimeWeather = new DateTimeWeather();
+
+    Date date = new Date();
+    Calendar calendar = Calendar.getInstance();
 
     for (int i = 0; i < 10; i++) {
       TimeDataDto timeDataDto = new TimeDataDto();
 
-      Calendar calendar = Calendar.getInstance();
       calendar.setTime(date);
       calendar.add(Calendar.HOUR_OF_DAY, i * 3);
       long timestamp = calendar.getTime().getTime();

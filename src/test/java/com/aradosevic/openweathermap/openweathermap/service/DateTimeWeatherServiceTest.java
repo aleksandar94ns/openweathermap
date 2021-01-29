@@ -54,6 +54,10 @@ public class DateTimeWeatherServiceTest {
     Assertions.assertEquals(id, dateTimeWeather.getId());
     Assertions.assertEquals(id, dateTimeWeather.getCity().getId());
     Assertions.assertEquals(temperature, dateTimeWeather.getTemperature());
+
+    Assertions.assertEquals(id, savedDateTimeWeather.getId());
+    Assertions.assertEquals(id, savedDateTimeWeather.getCity().getId());
+    Assertions.assertEquals(temperature, savedDateTimeWeather.getTemperature());
   }
 
   @Test
@@ -74,7 +78,7 @@ public class DateTimeWeatherServiceTest {
         .minTemp(minTemp)
         .maxTemp(maxTemp)
         .build();
-    long id2 = 2;
+
     DateTimeWeather dateTimeWeather2 = DateTimeWeather.builder()
         .id(id)
         .city(city)
@@ -98,5 +102,5 @@ public class DateTimeWeatherServiceTest {
         Iterables.getLast(foundDateTimeWeather));
   }
 
-  //TODO: Implement rest of DateTimeWeatherService methods, using the logic above
+  //TODO: Implement tests for the rest of DateTimeWeatherService methods, using the logic above
 }
