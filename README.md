@@ -54,6 +54,8 @@ Additionally, solution and application can be published in docker or cloud servi
 
 IT was not done currently due to time constraints.
 
+Pageable implementation has been left out, but its initial implementation can be found on pageable-support branch.
+
 ## Development
 
 [Intellij](https://www.jetbrains.com/idea/) as IDE has been used with [google style guide](intellij-java-google-style.xml) ([source](https://github.com/google/styleguide)). 
