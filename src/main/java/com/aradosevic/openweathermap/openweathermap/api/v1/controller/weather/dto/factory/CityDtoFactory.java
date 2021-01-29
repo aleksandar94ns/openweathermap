@@ -6,6 +6,9 @@ import com.aradosevic.openweathermap.openweathermap.domain.DateTimeWeather;
 import com.aradosevic.openweathermap.openweathermap.util.WeatherUtilities;
 import java.util.List;
 
+/**
+ * Class used to generate {@link CityDto} from domain or primitive values
+ */
 public class CityDtoFactory {
 
   public static CityDto getInstance(City city) {

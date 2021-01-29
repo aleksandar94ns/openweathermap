@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Class used to generate {@link DateTimeWeatherDto} from domain or primitive values
+ */
 public class DateTimeWeatherFactory {
 
   public static DateTimeWeatherDto getInstance(DateTimeWeather dateTimeWeather) {

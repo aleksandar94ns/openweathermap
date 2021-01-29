@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service used as use-case in order to fetch different data for API endpoints and convert them into proper DTOs
+ */
 @Service
 public class WeatherService {
 

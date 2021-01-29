@@ -27,6 +27,9 @@ public class DateTimeWeatherServiceTest {
   @Mock
   private DateTimeWeatherRepository repository;
 
+  /**
+   * Test successful saving of the {@link DateTimeWeather} into the database.
+   */
   @Test
   void saveTest() {
     //given
@@ -60,6 +63,9 @@ public class DateTimeWeatherServiceTest {
     Assertions.assertEquals(temperature, savedDateTimeWeather.getTemperature());
   }
 
+  /**
+   * Test fetching {@link DateTimeWeather} by {@link City} {@link String} name from database.
+   */
   @Test
   void findByCityName() {
     //given

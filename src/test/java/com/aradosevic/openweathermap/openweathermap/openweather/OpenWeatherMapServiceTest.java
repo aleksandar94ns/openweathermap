@@ -46,6 +46,11 @@ public class OpenWeatherMapServiceTest {
   @Mock
   private ClientAppProperties clientAppProperties;
 
+  /**
+   * Test case to cover the happy flow of the {@link OpenWeatherMapService} functionality.
+   * It should cover and test cases where cities and their respective temperatures are successfully
+   * saved into the database.
+   */
   @Test
   void testPopulation() {
     //given
@@ -122,4 +127,6 @@ public class OpenWeatherMapServiceTest {
     verify(dateTimeWeatherService, times(cityList.size() * dataDtos.size()))
         .save(any());
   }
+
+  //TODO: Implement unhappy flow for this service
 }

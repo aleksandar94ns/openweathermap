@@ -29,6 +29,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+/**
+ * Test case class for {@link WeatherController}
+ */
 @WebMvcTest(WeatherController.class)
 @AutoConfigureMockMvc
 public class WeatherControllerTest {
@@ -43,8 +46,13 @@ public class WeatherControllerTest {
   @Autowired
   private MockMvc mockMvc;
 
+  /**
+   * Test case where getting available cities from the API is successful.
+   *
+   * @throws Exception - {@link MockMvc} exception that can happen on invocation.
+   */
   @Test
-  public void weather_Cities_ShouldSucceed_WhenValidParametersAreSent() throws Exception {
+  public void weather_Cities_ShouldSucceed() throws Exception {
 
     when(weatherService.getAllCities())
         .thenReturn(Stream.of(CityDto.builder().build()).collect(Collectors.toList()));
@@ -54,6 +62,11 @@ public class WeatherControllerTest {
         .andExpect(status().isOk());
   }
 
+  /**
+   * Test case where get average for given cities API call succeeds while given proper parameters,
+   *
+   * @throws Exception - {@link MockMvc} exception that can happen on invocation.
+   */
   @Test
   public void weather_GetAverageForGivenCities_ShouldSucceed_WhenValidParametersAreSent()
       throws Exception {
@@ -86,6 +99,11 @@ public class WeatherControllerTest {
         .andExpect(status().isOk());
   }
 
+  /**
+   * Test case where get average for given cities API call will fail due to invalid parameters.
+   *
+   * @throws Exception - {@link MockMvc} exception that can happen on invocation.
+   */
   @Test
   public void weather_GetAverageForGivenCities_ShouldFail_WhenValidParametersAreNotSent()
       throws Exception {

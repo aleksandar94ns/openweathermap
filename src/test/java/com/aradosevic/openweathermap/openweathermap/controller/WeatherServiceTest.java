@@ -38,6 +38,9 @@ public class WeatherServiceTest {
   @Mock
   private DateTimeWeatherService dateTimeWeatherService;
 
+  /**
+   * Test creating {@link CityDto} with {@link DateTimeWeather} 
+   */
   @Test
   void getCityTemperatures() {
     //given
