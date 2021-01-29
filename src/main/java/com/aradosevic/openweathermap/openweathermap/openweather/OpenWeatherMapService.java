@@ -10,14 +10,13 @@ import com.aradosevic.openweathermap.openweathermap.openweather.dto.OpenWeatherA
 import com.aradosevic.openweathermap.openweathermap.openweather.dto.TimeDataDto;
 import com.aradosevic.openweathermap.openweathermap.service.CityService;
 import com.aradosevic.openweathermap.openweathermap.service.DateTimeWeatherService;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Date;
 
 /**
  * Command line runner class that is being called on application startup to fetch and populate data
@@ -38,8 +37,8 @@ public class OpenWeatherMapService {
 
   @Autowired
   public OpenWeatherMapService(RestTemplateBuilder restTemplateBuilder,
-                               ClientAppProperties config, CityService cityService,
-                               DateTimeWeatherService dateTimeWeatherService) {
+      ClientAppProperties config, CityService cityService,
+      DateTimeWeatherService dateTimeWeatherService) {
     this.restTemplateBuilder = restTemplateBuilder;
     this.config = config;
     this.cityService = cityService;

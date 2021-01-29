@@ -3,12 +3,12 @@ package com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.s
 import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.factory.CityDtoFactory;
 import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.response.CityDto;
 import com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties;
-import com.aradosevic.openweathermap.openweathermap.domain.City;
 import com.aradosevic.openweathermap.openweathermap.service.CityService;
 import com.aradosevic.openweathermap.openweathermap.service.DateTimeWeatherService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +30,13 @@ public class WeatherService {
     this.clientAppProperties = clientAppProperties;
   }
 
-  public List<City> getAllCities() {
-    return cityService.getAll();
+  public List<CityDto> getAllCities() {
+    return cityService.getAll().stream().map(CityDtoFactory::getInstanceWithName)
+        .collect(Collectors.toList());
+  }
+
+  public CityDto getCityTemperatures(String cityName) {
+    return CityDtoFactory.getInstance(cityService.findByName(cityName));
   }
 
   public CityDto getCityAverageAfterDate(long date, String cityName) {

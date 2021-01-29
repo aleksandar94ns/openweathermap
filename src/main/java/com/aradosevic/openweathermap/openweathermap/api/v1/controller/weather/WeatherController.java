@@ -1,16 +1,11 @@
 package com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather;
 
-import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.factory.CityDtoFactory;
 import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.request.CitiesAndDatesDto;
 import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.request.DateDto;
 import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.request.SpecificDatesDto;
 import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.response.CityDto;
 import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.service.WeatherService;
-import com.aradosevic.openweathermap.openweathermap.exception.NotFoundException;
 import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.DefaultMessages;
-import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.Keys;
-import com.aradosevic.openweathermap.openweathermap.repository.CityRepository;
-import com.aradosevic.openweathermap.openweathermap.repository.DateTimeWeatherRepository;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -33,16 +28,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 public class WeatherController {
 
-  private final CityRepository cityRepository;
-  private final DateTimeWeatherRepository dateTimeWeatherRepository;
   private final WeatherService weatherService;
 
   @Autowired
-  public WeatherController(CityRepository cityRepository,
-      DateTimeWeatherRepository dateTimeWeatherRepository,
-      WeatherService weatherService) {
-    this.cityRepository = cityRepository;
-    this.dateTimeWeatherRepository = dateTimeWeatherRepository;
+  public WeatherController(WeatherService weatherService) {
     this.weatherService = weatherService;
   }
 
@@ -59,9 +48,7 @@ public class WeatherController {
       })
   @GetMapping("/cities")
   public ResponseEntity<List<CityDto>> getAvailableCities() {
-    return ResponseEntity
-        .ok(weatherService.getAllCities().stream().map(CityDtoFactory::getInstanceWithName)
-            .collect(Collectors.toList()));
+    return ResponseEntity.ok(weatherService.getAllCities());
   }
 
   @GetMapping("/cities/average")
@@ -113,9 +100,7 @@ public class WeatherController {
 
   @GetMapping("/{cityName}/temp")
   public ResponseEntity<CityDto> getCityTemperature(@PathVariable String cityName) {
-    return ResponseEntity.ok(CityDtoFactory.getInstance(cityRepository.findByName(cityName)
-        .orElseThrow(() -> new NotFoundException(Keys.CITY_BY_NAME_NOT_FOUND, cityName))
-    ));
+    return ResponseEntity.ok(weatherService.getCityTemperatures(cityName));
   }
 
   @GetMapping("/{cityName}/average")

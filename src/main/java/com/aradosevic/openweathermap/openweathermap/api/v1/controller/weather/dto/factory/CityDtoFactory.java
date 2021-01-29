@@ -21,7 +21,8 @@ public class CityDtoFactory {
         .build();
   }
 
-  public static CityDto getCityWithAverage(String cityName, List<DateTimeWeather> dateTimeWeathers) {
+  public static CityDto getCityWithAverage(String cityName,
+      List<DateTimeWeather> dateTimeWeathers) {
     return CityDto.builder()
         .name(cityName)
         .averageTemp(WeatherUtilities.getAverageForData(dateTimeWeathers))
