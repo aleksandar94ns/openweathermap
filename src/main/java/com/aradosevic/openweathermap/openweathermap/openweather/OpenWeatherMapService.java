@@ -46,6 +46,11 @@ public class OpenWeatherMapService {
     this.dateTimeWeatherService = dateTimeWeatherService;
   }
 
+  @PostConstruct
+  void init() {
+    populateData();
+  }
+
   /**
    * Fetches data from all of the cities that are defined in application.properties.
    */

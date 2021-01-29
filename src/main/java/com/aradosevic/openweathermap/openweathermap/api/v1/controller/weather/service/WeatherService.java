@@ -3,6 +3,7 @@ package com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.s
 import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.factory.CityDtoFactory;
 import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.response.CityDto;
 import com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties;
+import com.aradosevic.openweathermap.openweathermap.domain.City;
 import com.aradosevic.openweathermap.openweathermap.service.CityService;
 import com.aradosevic.openweathermap.openweathermap.service.DateTimeWeatherService;
 import java.util.ArrayList;
@@ -27,6 +28,10 @@ public class WeatherService {
     this.cityService = cityService;
     this.dateTimeWeatherService = dateTimeWeatherService;
     this.clientAppProperties = clientAppProperties;
+  }
+
+  public List<City> getAllCities() {
+    return cityService.getAll();
   }
 
   public CityDto getCityAverageAfterDate(long date, String cityName) {
