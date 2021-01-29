@@ -20,10 +20,10 @@ import static org.mockito.Mockito.when;
 public class CityServiceTest {
 
   @InjectMocks
-  CityService service;
+  private CityService service;
 
   @Mock
-  CityRepository repository;
+  private CityRepository repository;
 
   @Test
   void saveTest() {
@@ -81,4 +81,6 @@ public class CityServiceTest {
       assertEquals(message, re.getMessage());
     }
   }
+
+  //TODO: Implement tests for the rest of CityService methods, using the logic above
 }
