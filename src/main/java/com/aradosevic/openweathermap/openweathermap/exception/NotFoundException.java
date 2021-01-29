@@ -4,10 +4,18 @@ import lombok.Getter;
 
 @Getter
 public class NotFoundException extends RuntimeException {
-    private final Long id;
 
-    public NotFoundException(String message, Long id) {
-        super(message);
-        this.id = id;
-    }
+  private Long id;
+  private String parameter;
+
+  //TODO: Can be used for city id, would be generally used for not found exceptions where we search by ids.
+  public NotFoundException(String message, Long id) {
+    super(message);
+    this.id = id;
+  }
+
+  public NotFoundException(String message, String parameter) {
+    super(message);
+    this.parameter = parameter;
+  }
 }

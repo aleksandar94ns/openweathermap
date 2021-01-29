@@ -9,5 +9,4 @@ public class OpenWeatherMapApplication {
   public static void main(String[] args) {
     SpringApplication.run(OpenWeatherMapApplication.class, args);
   }
-
 }
