@@ -3,6 +3,8 @@ package com.aradosevic.openweathermap.openweathermap.repository;
 import com.aradosevic.openweathermap.openweathermap.domain.DateTimeWeather;
 import java.util.Date;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +15,9 @@ public interface DateTimeWeatherRepository extends JpaRepository<DateTimeWeather
 
   //TODO: Can be deleted
   List<DateTimeWeather> findByCityName(String cityName);
+
+  //TODO: Finish pageable implementation
+  Page<DateTimeWeather> findByCityName(String cityName, Pageable pageable);
 
   /**
    * Query to find all {@link DateTimeWeather} instances where given parameters match

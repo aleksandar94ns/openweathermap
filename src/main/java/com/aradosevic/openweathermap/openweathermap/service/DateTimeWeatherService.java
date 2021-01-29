@@ -5,6 +5,8 @@ import com.aradosevic.openweathermap.openweathermap.repository.DateTimeWeatherRe
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +25,10 @@ public class DateTimeWeatherService {
 
   public List<DateTimeWeather> findByCityName(String cityName) {
     return repository.findByCityName(cityName);
+  }
+
+  public Page<DateTimeWeather> findByCityName(String cityName, Pageable pageable) {
+    return repository.findByCityName(cityName, pageable);
   }
 
   public List<DateTimeWeather> findAllByCityNameAndAfterDate(String cityName, Date afterDate) {

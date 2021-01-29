@@ -5,6 +5,8 @@ import com.aradosevic.openweathermap.openweathermap.domain.City;
 import com.aradosevic.openweathermap.openweathermap.domain.DateTimeWeather;
 import com.aradosevic.openweathermap.openweathermap.util.WeatherUtilities;
 import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
 
 public class CityDtoFactory {
 
@@ -26,6 +28,15 @@ public class CityDtoFactory {
     return CityDto.builder()
         .name(cityName)
         .averageTemp(WeatherUtilities.getAverageForData(dateTimeWeathers))
+        .build();
+  }
+
+  public static CityDto getCityWithAverage(String cityName,
+      Page<DateTimeWeather> dateTimeWeathers) {
+    return CityDto.builder()
+        .name(cityName)
+        .averageTemp(WeatherUtilities
+            .getAverageForData(dateTimeWeathers.stream().collect(Collectors.toList())))
         .build();
   }
 

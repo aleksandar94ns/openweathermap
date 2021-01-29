@@ -4,9 +4,11 @@ import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dt
 import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.request.DateDto;
 import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.request.SpecificDatesDto;
 import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.response.CityDto;
+import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.response.PageableCityDto;
 import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.service.WeatherService;
 import com.aradosevic.openweathermap.openweathermap.exception.handler.ErrorMessage.DefaultMessages;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.Comparator;
@@ -15,12 +17,14 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -115,5 +119,14 @@ public class WeatherController {
         .getAverageForCitiesBetweenDates(citiesAndDatesDto.getCities(),
             citiesAndDatesDto.getDatesDto().getStartDate(),
             citiesAndDatesDto.getDatesDto().getEndDate()));
+  }
+
+  @GetMapping("/search")
+  @ApiOperation(value = "Search cities by name")
+  @ApiPagination
+  public ResponseEntity<PageableCityDto> search(
+      @ApiParam(value = "filter value") @RequestParam String filter,
+      Pageable pageable) {
+    return ResponseEntity.ok(weatherService.getPageableAverageForAllCities(filter, pageable));
   }
 }

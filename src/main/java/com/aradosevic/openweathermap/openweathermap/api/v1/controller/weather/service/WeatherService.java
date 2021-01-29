@@ -2,6 +2,7 @@ package com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.s
 
 import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.factory.CityDtoFactory;
 import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.response.CityDto;
+import com.aradosevic.openweathermap.openweathermap.api.v1.controller.weather.dto.response.PageableCityDto;
 import com.aradosevic.openweathermap.openweathermap.configuration.properties.ClientAppProperties;
 import com.aradosevic.openweathermap.openweathermap.service.CityService;
 import com.aradosevic.openweathermap.openweathermap.service.DateTimeWeatherService;
@@ -10,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -78,6 +80,28 @@ public class WeatherService {
     cities.add(getCityAverage(clientAppProperties.getCity2()));
     cities.add(getCityAverage(clientAppProperties.getCity3()));
     return cities;
+  }
+
+  public PageableCityDto getPageableAverageForAllCities(String filter, Pageable pageable) {
+    List<CityDto> cities = new ArrayList<>();
+    cities.add(getPageableCityAverage(clientAppProperties.getCity1(), filter, pageable));
+    cities.add(getPageableCityAverage(clientAppProperties.getCity2(), filter, pageable));
+    cities.add(getPageableCityAverage(clientAppProperties.getCity3(), filter, pageable));
+    return map(cities);
+  }
+
+  private PageableCityDto map(List<CityDto> cityDtos) {
+    PageableCityDto pageableSearchResultDto = new PageableCityDto();
+    pageableSearchResultDto.setTotalHitsCount(cityDtos.size());
+    pageableSearchResultDto.setCurrentPageCount(cityDtos.size());
+
+    pageableSearchResultDto.setCityDtos(cityDtos);
+    return pageableSearchResultDto;
+  }
+
+  private CityDto getPageableCityAverage(String cityName, String filter, Pageable pageable) {
+    return CityDtoFactory
+        .getCityWithAverage(cityName, dateTimeWeatherService.findByCityName(cityName, pageable));
   }
 
   public CityDto getCityAverage(String cityName) {

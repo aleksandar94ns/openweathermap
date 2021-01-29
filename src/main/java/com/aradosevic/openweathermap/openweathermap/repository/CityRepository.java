@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-//TODO: Would use CityDb class instead of City, but would overcomplicate the project
+//TODO: Would use CityDb class instead of City, but would over-complicate the project
 @Repository
 public interface CityRepository extends JpaRepository<City, Long> {
 
