@@ -53,3 +53,7 @@ Not all test cases have been covered, but all the important edge cases and examp
 Additionally, solution and application can be published in docker or cloud service provider for easier testing and accessibility.
 
 IT was not done currently due to time constraints.
+
+## Development
+
+[Intellij](https://www.jetbrains.com/idea/) as IDE has been used with [google style guide](intellij-java-google-style.xml) ([source](https://github.com/google/styleguide)). 
